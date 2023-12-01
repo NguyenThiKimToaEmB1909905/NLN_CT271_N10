@@ -64,7 +64,6 @@ body a:hover {
     width: 240px;
     height: 100%;
     position: fixed;
-    background: rgba(241, 147, 59, 0.78);
     -webkit-transition: all 0.3s ease-in-out;
     -moz-transition: all 0.3s ease-in-out;
     -o-transition: all 0.3s ease-in-out;
@@ -377,7 +376,8 @@ ul.top-menu>li>a:focus {
 .nav .open>a,
 .nav .open>a:focus,
 .nav .open>a:hover {
-    background: #f8a240 !important;
+    background-color: var(--fyellow);
+    !important;
     color: #fff !important;
 }
 
@@ -389,7 +389,7 @@ ul.top-menu>li>a:focus {
 }
 
 .dropdown-menu.extended {
-    max-width: 320px !important;
+    max-width: 200px !important;
     min-width: 160px !important;
     top: 42px;
     width: 300px !important;
@@ -397,12 +397,12 @@ ul.top-menu>li>a:focus {
     box-shadow: 0 0px 5px rgba(0, 0, 0, 0.1) !important;
     border-radius: 5px;
     -webkit-border-radius: 5px;
-    background: #fff;
     border: none;
     left: -10px;
+    color: #000;
 }
 
-.notify-row .notification span.label {
+. .notify-row .notification span.label {
     display: inline-block;
     height: 21px;
     padding: 5px;

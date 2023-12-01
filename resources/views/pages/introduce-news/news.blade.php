@@ -1,5 +1,6 @@
 @extends('layout')
 @section('content')
+    <br><br><br><br>
     <section>
         <div class="container">
             <section id="cart_items">
@@ -11,7 +12,7 @@
                         </ol>
                     </div>
                 </div>
-                <div class="shopper-informations col-sm-12 " style="height: 1500px">
+                <div class="shopper-informations col-sm-12 " style="height: 1200px">
                     <div class="col-sm-8">
                         <div class="right-home">
                             <div class="head-box"><a href="">Tin tổng hợp </a></div>
@@ -222,7 +223,7 @@
         }
 
         .right-home .head-box {
-            background:  #FE980F !important;
+            background: #fdc537 !important;
             padding: 0 10px;
         }
 

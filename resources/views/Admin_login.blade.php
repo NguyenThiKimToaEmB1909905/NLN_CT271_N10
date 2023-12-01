@@ -29,12 +29,35 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <!-- //font-awesome icons -->
     <script src="js/jquery2.0.3.min.js"></script>
+
+
+    {{-- Moi --}}
+
+
+
+    <link href="{{ asset('public/backend/css/style9.css') }}" rel='stylesheet' type='text/css' />
+    <link href="{{ asset('public/backend/css/font-awesome9.css') }}" rel='stylesheet' type='text/css' />
+    <!-- js -->
+    <script src="{{ asset('public/backend/js/jquery-2.1.4.min.js') }}"></script>
+    <script src="{{ asset('public/backend/js/jquery-2.1.4.min.js') }}"></script>
+
+    <!-- //js -->
+
+    <!-- online-fonts -->
+    <link href="//fonts.googleapis.com/css?family=Oleo+Script:400,700&amp;subset=latin-ext" rel="stylesheet">
 </head>
 
-<body >
-    <div class="">
-        <div class="w3layouts-main" style="width: 550px">
-            <h2 style="color: #ed7919">Đăng Nhập Admin</h2>
+<body>
+    <!--header-->
+    <div class="header-w3l" style="color: black">
+        <h1>Đăng Nhập Admin</h1>
+    </div>
+    <!--//header-->
+    <!--main-->
+    <div class="main-w3layouts-agileinfo">
+        <!--form-stars-here-->
+        <div class="wthree-form">
+            {{-- <h2>Fill out the form below to login</h2> --}}
             <?php
             $message = Session::get('message'); /* lấy messages bên AdminContrller chổ đăng  nhập */
             if ($message) {
@@ -43,55 +66,42 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 Session::put('message', null); /* chỉ hiện thị đúng 1 lần không cho hiển thị nữa */
             }
             ?>
-            <form  action="{{ URL::to('/admin-dashboard') }}" method="post">
+            <form action="{{ URL::to('/admin-dashboard') }}" method="post">
                 {{ csrf_field() }}
-                <input style="font-size: 20px" type="text" class="ggg" name="admin_email" placeholder="Điền Email vào" required="">
-                <input style="font-size: 20px" type="password" class="ggg" name="admin_password" placeholder="Mật khẩu" required="">
-
-                <h6><a href="#">Quên mật khẩu?</a></h6>
-
-                <input type="submit" class="  btn btn-warning" value="Đăng nhập" name="login"
-                    style=" background: #ed7919;
-                color: white;">
-                {{-- <div class="container">
-                    <div class="row">
-                        <div class="col-sm-6  btn btn-info" style="height: 50px; font-size:20px">
-                            <div class=""><a href="{{ URL('/login-facebook/') }}">
-                                    <i class="bi bi-facebook"></i> Login bằng facebook
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-sm-6  btn btn-danger" style="height: 50px; font-size:20px">
-
-                            <div class=""><a href="{{ URL('/login-google/') }}"><i class="bi bi-google"></i> Login
-                                    bằng Google </a>
-                            </div>
-                        </div>
+                <div class="form-sub-w3">
+                    <input type="text" name="admin_email" placeholder="Điền Email vào" required="">
+                    <div class="icon-w3">
+                        <i class="fa fa-user" aria-hidden="true"></i>
                     </div>
-                </div> --}}
+                </div>
+                <div class="form-sub-w3">
+                    <input type="password" name="admin_password" placeholder="Mật khẩu" required="">
 
-
+                    <div class="icon-w3">
+                        <i class="fa fa-unlock-alt" aria-hidden="true"></i>
+                    </div>
+                </div>
+                <label class="anim">
+                    <input type="checkbox" class="checkbox">
+                    <span>Nhớ Mật Khẩu</span>
+                    <a href="#">Quên Mật Khẩu</a>
+                </label>
+                <div class="clear"></div>
+                <div class="submit-agileits">
+                    <input type="submit" class="  btn btn-warning" value="Đăng nhập" name="login">
+                </div>
             </form>
-            <style>
-                html,
-                body {
-                    font-family: 'Roboto', sans-serif;
-                    font-size: 100%;
-                    overflow-x: hidden;
-                    background-image: linear-gradient(-60deg, rgb(248, 217, 79), #ffff, rgb(237, 154, 91));
-                    bottom: 0;
-                    left: -50%;
-                    /* opacity: .5; */
-                    position: fixed;
-                    right: -50%;
-                    top: 0;
-                    z-index: -1;
-                    /* background: url(../images/bg.jpg) no-repeat 0px 0px; */
-                    background-size: cover;
-                }
-            </style>
+
         </div>
+        <!--//form-ends-here-->
+
     </div>
+    {{-- <div class="footer">
+        <p>&copy; 2017 Glassy Login Form. All rights reserved | Design by <a href="http://w3layouts.com">W3layouts</a>
+        </p>
+    </div> --}}
+
+
     <script src="{{ asset('public/bakend/js/bootstrap.js') }}"></script>
     <script src="{{ asset('public/bakend/js/jquery.dcjqaccordion.2.7.js') }}"></script>
     <script src="{{ asset('public/bakend/js/scripts.js') }}"></script>

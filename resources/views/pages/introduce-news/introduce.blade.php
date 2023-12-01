@@ -1,5 +1,6 @@
 @extends('layout')
 @section('content')
+<br><br><br><br>
     <section>
         <div class="container">
             <section id="cart_items">

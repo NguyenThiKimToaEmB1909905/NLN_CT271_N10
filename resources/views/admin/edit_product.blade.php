@@ -1,62 +1,86 @@
 @extends('admin_layout')
 @section('admin_content')
-    <div class="row">
-        <div class="col-lg-12">
-            <section class="panel">
-                <header class="panel-heading">
-                    Cập nhật sách
-                </header>
-                <div class="panel-body">
-                    <?php
-                    $message = Session::get('message'); /* lấy messages bên AdminContrller chổ đăng  nhập */
-                    if ($message) {
-                        /* nếu có tồn tại thì */
-                        echo '<span class="text-alert" style="color: rgb(249, 1, 1); font-weight: 200px">', $message, '</span>'; /* in ra cái dòng tin nhắn Mật khẩu hoăc Email sai..... */
-                        Session::put('message', null); /* chỉ hiện thị đúng 1 lần không cho hiển thị nữa */
-                    }
-                    ?>
-                    @foreach ($edit_product as $key => $pro)
-                        <div class="position-center">
-                            <form role="form" action="{{ URL::to('/update-product/' . $pro->product_id) }}" method="post"
-                                enctype="multipart/form-data">{{-- thường để gửi ảnh lên csdl thì phải có trường enctype="multipart/form-data" --}}
-                                {{ csrf_field() }}
-                                <div class="form-group">
-                                    <label for="exampleInputPassword1">Tên sách</label>
+    <section>
+        <div class="mt-2 p-5 ">
+            <h5 class="text-muted my-2">Cập Nhật Sản Phẩm</h5>
+            <?php
+            $message = Session::get('message'); /* lấy messages bên AdminContrller chổ đăng  nhập */
+            if ($message) {
+                /* nếu có tồn tại thì */
+                echo '<span class="text-alert">', $message, '</span>'; /* in ra cái dòng tin nhắn Mật khẩu hoăc Email sai..... */
+                Session::put('message', null); /* chỉ hiện thị đúng 1 lần không cho hiển thị nữa */
+            }
+            ?>
+            <div class="fullDivider"></div>
+            @foreach ($edit_product as $key => $pro)
+                <div class="m-md-4 card card-body addBookCard">
+                    <form role="form" action="{{ URL::to('/update-product/' . $pro->product_id) }}" method="post"
+                        enctype="multipart/form-data">{{-- thường để gửi ảnh lên csdl thì phải có trường enctype="multipart/form-data" --}}
+                        {{ csrf_field() }}
+                        <!-- 2 column grid layout with text inputs for the first and last names -->
+                        <div class="row mb-4">
+                            <div class="col">
+                                <small class=" text-small text-muted ">Tên sách </small>
+                                <div class="form-outline">
                                     <input type="text" class="form-control" name="product_name"
                                         id="exampleInputPassword1" value="{{ $pro->product_name }}"
                                         placeholder="Tên danh mục">
+                                    <div class="invalid-feedback">
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="exampleInputPassword1">Hình ảnh sách</label>
-                                    <input type="file" class="form-control" name="product_image"
-                                        id="exampleInputPassword1">
-                                    <img src="{{ URL::to('public/uploads/product/' . $pro->product_image) }}" height="50" width="50">
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputPassword1">Giá sách</label>
+                            </div>
+                            <div class="col">
+                                <small class=" text-small text-muted ">Giá sách</small>
+                                <div class="form-outline">
                                     <input type="text" class="form-control" name="product_price"
                                         id="exampleInputPassword1" value="{{ $pro->product_price }}">
+                                    <div class="invalid-feedback">
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="exampleInputPassword1">Mô tả sách</label>
-                                    <textarea style="resize:none" rows="5" class="form-control" name="product_desc" 
-                                        placeholder="Mô tả sách">{{ $pro->product_desc }}</textarea>
+                            </div>
+                            <div class="col">
+                                <small class=" text-small text-muted ">Số lượng sách</small>
+                                <div class="form-outline">
+                                    <input type="text" class="form-control" name="product_quantity"
+                                        id="exampleInputPassword1" required="" value="{{ $pro->product_quantity }}">
+                                    <div class="invalid-feedback">
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="exampleInputPassword1">Nội dung sách</label>
-                                    <textarea style="resize:none" rows="5" class="form-control" name="product_content" 
-                                        placeholder="Nội dung sách">{{ $pro->product_content }}</textarea>
+                            </div>
+                        </div>
+                        <div class="row mb-4">
+                            <div class="col">
+                                <small class=" text-small text-muted ">Mô tả sách </small>
+                                <div class="form-outline">
+                                    <textarea style="resize:none" rows="5" class="form-control" name="product_desc" placeholder="Mô tả sách">{{ $pro->product_desc }}</textarea>
+                                    <div class="invalid-feedback">
+                                    </div>
+
                                 </div>
-                                 {{-- <script>
-                                CKEDITOR.replace('ckeditor1'); đặt id của mô tả sách là ckeditor1
-                                CKEDITOR.replace('ckeditor2'); đặt id của nọi dung sp là ckeditor2
-                            </script> --}}
-                                <div class="form-group">
-                                    <label for="exampleInputPassword1">Danh mục</label>
+                            </div>
+                            <div class="col">
+                                <small class=" text-small text-muted ">Nội dung sách</small>
+                                <div class="form-outline">
+                                    <textarea style="resize:none" rows="5" class="form-control" name="product_content" placeholder="Nội dung sách">{{ $pro->product_content }}</textarea>
+                                    <div class="invalid-feedback"></div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Text input -->
+
+
+                        <!-- bookType and language  -->
+                        <div class="row mb-4">
+                            <div class="col">
+                                <small class=" text-small text-muted ">Thể loại</small>
+                                <div class="form-outline">
                                     <select class="form-control input-sm m-bot15" name="product_cate">
                                         @foreach ($cate_product as $key => $cate)
-                                            @if ($cate->category_id == $pro->category_id){{-- nếu hk có dòng if này thì vẫn cập nhật thành công nhưng cập nhật lại thì sẽ hk lưu nhưng j đã cập nhật lần 2 --}}
-                                                <option selected value="{{ $cate->category_id }}">{{ $cate->category_name }}
+                                            @if ($cate->category_id == $pro->category_id)
+                                                {{-- nếu hk có dòng if này thì vẫn cập nhật thành công nhưng cập nhật lại thì sẽ hk lưu nhưng j đã cập nhật lần 2 --}}
+                                                <option selected value="{{ $cate->category_id }}">
+                                                    {{ $cate->category_name }}
                                                 </option>
                                             @else
                                                 <option value="{{ $cate->category_id }}">
@@ -66,42 +90,135 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="form-group">
-                                    <label for="exampleInputPassword1">Thương hiệu</label>
+                            </div>
+                            <div class="col">
+                                <small class=" text-small text-muted ">Thương hiệu</small>
+                                <div class="form-outline">
                                     <select class="form-control input-sm m-bot15" name="product_brand">
-                                        
                                         @foreach ($brand_product as $key => $brand)
-                                            @if ($brand->brand_id == $pro->brand_id){{-- nếu hk có dòng if này thì vẫn cập nhật thành công nhưng cập nhật lại thì sẽ hk lưu nhưng j đã cập nhật lần 2 --}}
-                                                <option selected value="{{ $brand->brand_id }}">{{ $brand->brand_name }}</option>>
+                                            @if ($brand->brand_id == $pro->brand_id)
+                                                {{-- nếu hk có dòng if này thì vẫn cập nhật thành công nhưng cập nhật lại thì sẽ hk lưu nhưng j đã cập nhật lần 2 --}}
+                                                <option selected value="{{ $brand->brand_id }}">
+                                                    {{ $brand->brand_name }}</option>>
                                             @else
-                                            <option value="{{ $brand->brand_id }}">{{ $brand->brand_name }}</option>
+                                                <option value="{{ $brand->brand_id }}">{{ $brand->brand_name }}
+                                                </option>
                                             @endif
                                         @endforeach
 
                                     </select>
                                 </div>
-                                <div class="form-group">
-                                    <label for="exampleInputPassword1">Hiển thị</label>
-                                    <select class="form-control input-sm m-bot15" name="product_status">
-                                        <option value="0">Ẩn</option>
-                                        <option value="1">Hiện</option>
-
-                                    </select>
-                                </div>
-
-                                <button type="submit" name=" add_brand_product"class="btn btn-info">cập nhật sản
-                                    phẩm</button>
-
-                            </form>
+                            </div>
                         </div>
-                    @endforeach
-                </div>
-            </section>
 
+                        <!-- Text input -->
+                        <div class="form-outline mb-4">
+
+                            <small class="text-small">Hình ảnh sách</small>
+                            <input type="file" class="form-control" name="product_image" id="exampleInputPassword1">
+                            <img src="{{ URL::to('public/uploads/product/' . $pro->product_image) }}" height="50"
+                                width="50">
+                        </div>
+                        <div class="form-outline mb-4">
+
+                            <small class="text-small">Hiển thị</small>
+                            <select class="form-control input-sm m-bot15" name="product_status">
+                                <option value="1">Ẩn</option>
+                                <option value="0">Hiện</option>
+
+                            </select>
+                        </div>
+
+                        <!-- Message input -->
+                        {{-- <div class="form-outline mb-4">
+                        <small class="text-small">Ghi chú</small>
+                        <textarea name="bookDescription" class="form-control" id="form6Example7" rows="4"></textarea>
+                        <div class="invalid-feedback"></div>
+
+
+
+                    </div> --}}
+
+                        <!-- Submit button -->
+                        <button type="submit" class="btn btn-primary btn-block mb-4" name=" add_brand_product">Cập nhật
+                            sách</button>
+                    </form>
+
+                </div>
+            @endforeach
         </div>
 
 
+        <!-- <script>
+            var options = [];
 
-    </div>
-    </div>
+            $('.dropdown-menu a').on(
+                'click',
+                function(event) {
+
+                    var $target = $(event.currentTarget),
+                        val = $target
+                        .attr('data-value'),
+                        $inp = $target
+                        .find('input'),
+                        idx;
+
+                    if ((idx = options.indexOf(val)) > -1) {
+                        options.splice(idx, 1);
+                        setTimeout(function() {
+                            $inp.prop('checked', false)
+                        }, 0);
+                    } else {
+                        options.push(val);
+                        setTimeout(function() {
+                            $inp.prop('checked', true)
+                        }, 0);
+                    }
+
+                    $(event.target).blur();
+
+                    console.log(options);
+                    $(".categoryInput").val(options);
+
+                    return false;
+                });
+        </script> -->
+
+        <script th:if="${alert.equals('saveBook')}">
+            Swal.fire({
+                icon: 'success',
+                title: 'Book Saved',
+                width: 550,
+                padding: '1em',
+                text: "Your book has bean publish to sell. book data add successfully to your database !!",
+                backdrop: `
+            rgba(255,233,150,0.3)
+          `
+            });
+        </script>
+        <script th:if="${alert.equals('priceError')}">
+            Swal.fire({
+                icon: 'warning',
+                width: 550,
+                padding: '1em',
+                text: "Book price not be 0 or book discount not be greter than 100% ",
+                backdrop: `
+            rgba(255,233,150,0.3)
+          `
+            });
+        </script>
+        <script th:if="${alert.equals('bookNotSave')}">
+            Swal.fire({
+                icon: 'error',
+                title: 'Book Not Saved !!',
+                width: 550,
+                padding: '1em',
+                text: "Your book has bean publish to sell. book data add successfully to your database !!",
+                backdrop: `
+            rgba(255,233,150,0.3)
+          `
+            });
+        </script>
+
+    </section>
 @endsection

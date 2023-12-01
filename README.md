@@ -1,12 +1,10 @@
-# Luận văn bán sách online
+# Niên Luận Ngành Website Bán Sách online
+
+# CT271_N10
 
 **MSSV**: B1909905
 
 **Họ tên SV**: Nguyễn Thị Kim Tỏa Em
-
-
-
-
 
 <!-- <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 

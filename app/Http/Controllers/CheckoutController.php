@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use DB;
 use Illuminate\Http\Request;
 use App\Models\Client;
+use App\Models\Shipping;
+use App\Models\Payment;
+use App\Models\Order;
+use App\Models\OrderDetails;
 use App\Models\SocialClient;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Redirect;
@@ -47,7 +51,7 @@ class CheckoutController extends Controller
         Session::put('client_id', $client_id);
         Session::put('client_name', $request->client_name);
 
-        return Redirect::to('/show_checkout');
+        return Redirect::to('/');
     }
     // đăng nhập khi đã đăng kí tài khoản
     public function show_checkout()
@@ -124,7 +128,7 @@ class CheckoutController extends Controller
         // Session::put('client_picture',$account_name->client_picture);
 
         // }
-        return redirect('/trang-chu')->with('message', 'Đăng nhập Taài Khoản thành công');
+        return redirect('/trang-chu')->with('message', 'Đăng nhập Tài Khoản thành công');
     }
 
     public function findOrCreateClient($users, $provider)
@@ -174,12 +178,12 @@ class CheckoutController extends Controller
             ->first();
         if ($account) { // trường hợp đã đăng nhập rồi
             //Login lúc này là cái model/Login
-            
+
             $account_name = Client::where('client_id', $account->user)->first();
             Session::put('client_id', $account_name->client_id);
             Session::put('client_name', $account_name->client_name);
             Session::put('client_picture', $account_name->client_picture);
-            
+
 
             return redirect('/trang-chu')->with('message', 'Đăng nhập  Khoản thành công');
         } else { // trường hợp chưa đăng nhập bên trang facebook
@@ -199,7 +203,7 @@ class CheckoutController extends Controller
                     'client_password' => '', // login bằng facebook nên không cần password
                     'client_picture' => $provider->avatar,
                     'client_sdt' => ''
-                    
+
 
 
                 ]);
@@ -223,53 +227,116 @@ class CheckoutController extends Controller
 
 
     // đăng nhập tài khoản của khách hàng
-    public function login_client(Request $request)
+    /* public function login_client(Request $request)
     {
+        var_dump($request);
         $email = $request->email_account;
         $password = md5($request->password_account);
         $result = DB::table('tbl_clients')
             ->where('client_email', $email)
             ->where('client_password', $password)->first();
 
-        // $credentials = [
-        //     'email' => $request->email_account,
-        //     'password' => ($request->password_account),
-        // ];
-        // echo'<pre>';
-        // print_r($result);
-        // echo '</pre>';
-
-        // if (Auth::attempt($credentials)) {
-        //     return 1;
-        //     // return Redirect::to('/show_checkout');
-        //     // return redirect()->route('dashboard');
-        // } else return 0;
-
-
-        // if(auth::check()){
-        //     return 1;
-        // }else{
-        //     return 0;
-        // }
+       
 
 
 
         if ($result) {
 
             Session::put('client_id', $request->client_id);
-            //    return  
-            // print_r($result);
 
-            return Redirect::to('/show_checkout');
+            
+
+             return Redirect::to('/show_checkout');
         } else {
 
-            return Redirect::to('/login_checkout');
+            
+
+             return Redirect::to('/login_checkout');
         }
         Session::save();
+    } */
+
+    public function login_client(Request $request)
+    {
+        //$data = $request->all();
+        $data = $request->all();
+
+
+        $client_email = $data['client_email'];
+        $client_password = md5($data['client_password']);
+
+        $login = Client::where('client_email', $client_email)->where('client_password', $client_password)->first();
+        if ($login) {
+            $login_count = $login->count();
+            if ($login_count > 0) {
+                Session::put('client_name', $login->client_name);
+                Session::put('client_id', $login->client_id);
+
+                return Redirect::to('/trang-chu');
+            }
+        } else {
+            Session::put('message', '<p style="color: red">Mật khẩu hoặc tên đăng nhập sai. Vui lòng nhập lại!!!</p>');
+            return Redirect::to('/login_checkout');
+        }
     }
 
 
+    /* xác nhận đơn hàng bằng ajax */
 
+    public function confirm_order(Request $request)
+    {
+
+        $data = $request->all();
+
+        $payment = new Payment();
+        $payment->payment_method = $data['payment_method'];
+        /* $data['payment_status'] = 'Đang chờ xử lí'; */
+        $payment->save();
+        $payment_id = $payment->payment_id;
+        /* $payment_id = DB::table('tbl_payment')->insertGetId($data); */
+
+        $shipping = new Shipping();
+        $shipping->shipping_name = $data['shipping_name'];
+        $shipping->shipping_email = $data['shipping_email'];
+        $shipping->shipping_phone = $data['shipping_phone'];
+        $shipping->shipping_address = $data['shipping_address'];
+        $shipping->shipping_note = $data['shipping_note'];
+
+
+        $shipping->save();
+        $shipping_id = $shipping->shipping_id;
+
+        $checkout_code = substr(md5(microtime()), rand(0, 26), 5);
+
+
+        $order = new Order;
+        $order->client_id = Session::get('client_id');
+        $order->shipping_id = $shipping_id;
+        /* $order->payment_id = $payment_id; */
+
+        $order->order_status = 1;
+        $order->order_code = $checkout_code;
+
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
+        $order->created_at = now();
+        $order->save();
+
+        if (Session::get('cart') == true) {
+            foreach (Session::get('cart') as $key => $cart) {
+                $order_details = new OrderDetails;
+                $order_details->order_code = $checkout_code;
+                $order_details->product_id = $cart['product_id'];
+                $order_details->product_name = $cart['product_name'];
+                $order_details->product_price = $cart['product_price'];
+                $order_details->product_sales_quantity = $cart['product_qty'];
+
+                $order_details->save();
+            }
+        }
+        /*  Session::forget('coupon');
+        Session::forget('fee'); */
+        Session::forget('cart');
+    }
     //thanh toán xong 
     public function order_place(Request $request)
     {
@@ -287,10 +354,10 @@ class CheckoutController extends Controller
         $order_data['client_id'] = Session::get('client_id');
         $order_data['shipping_id'] = Session::get('shipping_id');
         $order_data['payment_id'] = $payment_id;
-        $order_data['order_total'] = Cart::subtotal();
-        $order_data['order_status'] = 'Đang chờ xử lí';
+        $order_data['order_total'] = Cart::total();
+        $order_data['order_status'] = '1';
 
-        $checkout_code = substr(md5(microtime()),rand(0,26),5);
+        $checkout_code = substr(md5(microtime()), rand(0, 26), 5);
         $order_data['order_code'] = $checkout_code;
         date_default_timezone_set('Asia/Ho_Chi_Minh');
         $order_data['created_at'] = now();
@@ -305,14 +372,15 @@ class CheckoutController extends Controller
             $order_d_data['product_name'] = $v_content->name;
             $order_d_data['product_price'] = $v_content->price;
             $order_d_data['product_sales_quantity'] = $v_content->qty;
-            $checkout_code = substr(md5(microtime()),rand(0,26),5);
-        $order_d_data['order_code'] = $checkout_code;
-        date_default_timezone_set('Asia/Ho_Chi_Minh');
-        $order_d_data['created_at'] = now();
+
+
+            $order_d_data['order_code'] = $checkout_code;
+            date_default_timezone_set('Asia/Ho_Chi_Minh');
+            $order_d_data['created_at'] = now();
             DB::table('tbl_order_details')->insert($order_d_data);
         }
         if ($data['payment_method'] == 1) {
-            echo 'Thanh toans the ATM';
+            echo 'Thanh toán the ATM';
         } else {
             cart::destroy();
             $cate_product = DB::table('tbl_category_product')->where('category_status', '0')->orderby('category_id', 'desc')->get();
@@ -327,7 +395,7 @@ class CheckoutController extends Controller
 
 
     }
-    //quản lí đơn hàng trong admin
+    ////////////////////////////quản lí đơn hàng trong admin
     public function AuthLogin()
     {
         $admin_id = Session::get('admin_id');

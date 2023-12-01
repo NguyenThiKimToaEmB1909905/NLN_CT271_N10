@@ -39,8 +39,8 @@ class ProductController extends Controller
 
         $all_product = DB::table('tbl_product')
             ->join('tbl_category_product', 'tbl_category_product.category_id', '=', 'tbl_product.category_id') // liên kết khóa ngoại giữa bảng tbl_product với bẳng tbl_category_product
-            ->join('tbl_brand', 'tbl_brand.brand_id', '=', 'tbl_product.brand_id')// liên kết khóa ngoại giữa bảng tbl_product với bẳng tbl_brand
-            ->orderBy('tbl_product.product_id', 'asc') 
+            ->join('tbl_brand', 'tbl_brand.brand_id', '=', 'tbl_product.brand_id') // liên kết khóa ngoại giữa bảng tbl_product với bẳng tbl_brand
+            ->orderBy('tbl_product.product_id', 'asc')
             ->paginate(10);
 
         $manager_product = view('admin.all_product')->with('all_product', $all_product);
@@ -53,9 +53,12 @@ class ProductController extends Controller
 
         $data = array();
         $data['product_name'] = $request->product_name;
+        $data['product_quantity'] = $request->product_quantity;
+        $data['product_sold'] = $request->product_sold;
         $data['product_price'] = $request->product_price;
         $data['product_desc'] = $request->product_desc;
         $data['product_status'] = $request->product_status;
+
         $data['product_content'] = $request->product_content;
         $data['brand_id'] = $request->product_brand;
         $data['category_id'] = $request->product_cate; // tên cột trong bảng data =....->tên đặt lại để đặt vào name="..."
@@ -115,6 +118,7 @@ class ProductController extends Controller
         $data = array();
 
         $data['product_name'] = $request->product_name;
+        $data['product_quantity'] = $request->product_quantity;
         $data['product_price'] = $request->product_price;
         $data['product_desc'] = $request->product_desc;
         $data['product_status'] = $request->product_status;
@@ -158,34 +162,34 @@ class ProductController extends Controller
 
         $cate_product = DB::table('tbl_category_product')->where('category_status', '0')->orderby('category_id', 'desc')->get();
         $brand_product = DB::table('tbl_brand')->where('brand_status', '0')->orderBy('brand_id', 'desc')->get();
-        
-        
+
+
 
         $details_product = DB::table('tbl_product')
-        ->join('tbl_category_product', 'tbl_category_product.category_id', '=', 'tbl_product.category_id') // liên kết khóa ngoại giữa bảng tbl_product với bẳng tbl_category_product
-        ->join('tbl_brand', 'tbl_brand.brand_id', '=', 'tbl_product.brand_id')// liên kết khóa ngoại giữa bảng tbl_product với bẳng tbl_brand
-        ->orderBy('tbl_product.product_id', 'desc') 
-        ->where('tbl_product.product_id',$product_id)
-        ->get();
+            ->join('tbl_category_product', 'tbl_category_product.category_id', '=', 'tbl_product.category_id') // liên kết khóa ngoại giữa bảng tbl_product với bẳng tbl_category_product
+            ->join('tbl_brand', 'tbl_brand.brand_id', '=', 'tbl_product.brand_id') // liên kết khóa ngoại giữa bảng tbl_product với bẳng tbl_brand
+            ->orderBy('tbl_product.product_id', 'desc')
+            ->where('tbl_product.product_id', $product_id)
+            ->get();
 
-        foreach($details_product as $key => $detail){
+        foreach ($details_product as $key => $detail) {
             $category_id = $detail->category_id;
         }
 
         $related_product = DB::table('tbl_product')
-        ->join('tbl_category_product', 'tbl_category_product.category_id', '=', 'tbl_product.category_id') // liên kết khóa ngoại giữa bảng tbl_product với bẳng tbl_category_product
-        ->join('tbl_brand', 'tbl_brand.brand_id', '=', 'tbl_product.brand_id')->orderBy('tbl_product.product_id', 'desc') // liên kết khóa ngoại giữa bảng tbl_product với bẳng tbl_brand
-        ->where('tbl_category_product.category_id',$category_id)
-        // ->andwhere('tbl_category_product.category_id','=','3')
-        ->whereNotIn('tbl_product.product_id',[$product_id])//lấy nhưng sp thuộc danh mục đó nhưng trừ cái sp hiện tại trong tràn chi tiết
-        ->get();
+            ->join('tbl_category_product', 'tbl_category_product.category_id', '=', 'tbl_product.category_id') // liên kết khóa ngoại giữa bảng tbl_product với bẳng tbl_category_product
+            ->join('tbl_brand', 'tbl_brand.brand_id', '=', 'tbl_product.brand_id')->orderBy('tbl_product.product_id', 'desc') // liên kết khóa ngoại giữa bảng tbl_product với bẳng tbl_brand
+            ->where('tbl_category_product.category_id', $category_id)
+            // ->andwhere('tbl_category_product.category_id','=','3')
+            ->whereNotIn('tbl_product.product_id', [$product_id]) //lấy nhưng sp thuộc danh mục đó nhưng trừ cái sp hiện tại trong tràn chi tiết
+            ->get();
 
         return view('pages.details.show_detail')
             ->with('category_home', $cate_product)
             ->with('brand_home', $brand_product)
-             ->with('product_details', $details_product)
-             ->with('related', $related_product);
-            
-            // ->with('brand_name', $brand_name);
+            ->with('product_details', $details_product)
+            ->with('related', $related_product);
+
+        // ->with('brand_name', $brand_name);
     }
 }

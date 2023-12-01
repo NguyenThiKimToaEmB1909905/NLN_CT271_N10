@@ -9,8 +9,8 @@ class Client extends Model
 {
     public $timestamps = false; //set time to false
     protected $fillable = [
-    	'client_name', 'client_email', 'client_password','client_sdt','client_picture'
+        'client_name', 'client_email', 'client_password', 'client_sdt', 'client_picture'
     ];
     protected $primaryKey = 'client_id';
- 	protected $table = 'tbl_clients';
+    protected $table = 'tbl_clients';
 }

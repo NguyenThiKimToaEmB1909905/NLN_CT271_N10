@@ -15,6 +15,12 @@ use App\Http\Controllers\HomeController;
  */
 // nếu về thư mục gốc thì trả+ở lại trang welcom
 
+/* trang cash_payment */
+Route::get('/cash-payment', 'App\Http\Controllers\HomeController@cash_payment');
+
+// gửi mail
+Route::get('/send-mail', 'App\Http\Controllers\HomeController@send_mail');
+
 // gọi trang home vào trang layout
 
 //fontend
@@ -43,22 +49,22 @@ Route::get('/logout', 'App\Http\Controllers\AdminController@logout');
 
 Route::post('/admin-dashboard', 'App\Http\Controllers\AdminController@dashboard');
 //Login facebook(admin)
-Route::get('/login-facebook','App\Http\Controllers\AdminController@login_facebook');
-Route::get('/admin/callback','App\Http\Controllers\AdminController@callback_facebook');
+Route::get('/login-facebook', 'App\Http\Controllers\AdminController@login_facebook');
+Route::get('/admin/callback', 'App\Http\Controllers\AdminController@callback_facebook');
 
 
 
 
 //Login google(admin)
-Route::get('/login-google','App\Http\Controllers\AdminController@login_google');
-Route::get('/google/callback','App\Http\Controllers\AdminController@callback_google');
+Route::get('/login-google', 'App\Http\Controllers\AdminController@login_google');
+Route::get('/google/callback', 'App\Http\Controllers\AdminController@callback_google');
 
 //Login google(client)
-Route::get('/login-client-google','App\Http\Controllers\CheckoutController@login_client_google');
-Route::get('client/google/callback','App\Http\Controllers\CheckoutController@callback_client_google');
+Route::get('/login-client-google', 'App\Http\Controllers\CheckoutController@login_client_google');
+Route::get('client/google/callback', 'App\Http\Controllers\CheckoutController@callback_client_google');
 //Login facebook(client)
-Route::get('/login-client-facebook','App\Http\Controllers\CheckoutController@login_client_facebook1');
-Route::get('client/facebook/callback','App\Http\Controllers\CheckoutController@callback_client_facebook1');
+Route::get('/login-client-facebook', 'App\Http\Controllers\CheckoutController@login_client_facebook1');
+Route::get('client/facebook/callback', 'App\Http\Controllers\CheckoutController@callback_client_facebook1');
 
 //trang giới thiệu và tin tức
 Route::get('/introduce', 'App\Http\Controllers\ContactController@introduce');
@@ -114,6 +120,10 @@ Route::post('/save_cart', 'App\Http\Controllers\CartController@save_cart');
 Route::get('/delete_to_cart/{rowId}', 'App\Http\Controllers\CartController@delete_to_cart');
 Route::post('/update_cart_quantity', 'App\Http\Controllers\CartController@update_cart_quantity');
 Route::get('/show_cart', 'App\Http\Controllers\CartController@show_cart');
+Route::post('/add-cart-ajax', 'App\Http\Controllers\CartController@add_cart_ajax');
+Route::get('/gio-hang', 'App\Http\Controllers\CartController@gio_hang');
+Route::get('/del-product/{session_id}', 'App\Http\Controllers\CartController@delete_product');
+Route::post('/update-cart', 'App\Http\Controllers\CartController@update_cart');
 
 
 //Checkout(thủ tục thanh toán)
@@ -129,19 +139,44 @@ Route::get('/logout_checkout', 'App\Http\Controllers\CheckoutController@logout_c
 Route::get('/show_checkout', 'App\Http\Controllers\CheckoutController@show_checkout');
 
 Route::post('/save_checkout_client', 'App\Http\Controllers\CheckoutController@save_checkout_client');
-    /* thanh toán khi đã có tk đăng nhâp và có gửi thông tin vận chuyển thì sẽ chuyển đến trang thanh toán */
+/* thanh toán khi đã có tk đăng nhâp và có gửi thông tin vận chuyển thì sẽ chuyển đến trang thanh toán */
 Route::get('/payment', 'App\Http\Controllers\CheckoutController@payment');
 
-    ///////// order(đặt hàng)
+///////// order(đặt hàng)
+/*  xác nhận đơn hàng bằng ajax */
+Route::post('/confirm-order', 'App\Http\Controllers\CheckoutController@confirm_order');
+
+
 Route::post('/order_place', 'App\Http\Controllers\CheckoutController@order_place');
 // quản lí đơn hàng ở admin được viết trong checkcontroller
-Route::get('/manage_order', 'App\Http\Controllers\CheckoutController@manage_order');
+Route::get('/manage_order', 'App\Http\Controllers\OrderController@manage_order');
 
 // xem đơn hàng tại trang admin.quản lí đơn hàng
 Route::get('/view_order/{orderId}', 'App\Http\Controllers\CheckoutController@view_order');
-Route::get('/delete_order/{orderId}', 'App\Http\Controllers\CheckoutController@delete_order');
+Route::get('/view-order/{order_code}', 'App\Http\Controllers\OrderController@view_order');
+Route::get('/print-order/{checkout_code}', 'App\Http\Controllers\OrderController@print_order');
+
+//thay đổi tình trạng đơn hàng
+Route::post('/update-order-qty', 'App\Http\Controllers\OrderController@update_order_qty');
+// cập nhật số lượng sp khách hàng đã mua
+Route::post('/update-qty', 'App\Http\Controllers\OrderController@update_qty');
+
+//
+Route::get('/delete_order/{order_code}', 'App\Http\Controllers\OrderController@delete_order');
+
+
 
 //đơn hàng của tôi
-Route::get('/myorder', 'App\Http\Controllers\OrderController@myorder');
-Route::get('/view_myorder/{orderId}', 'App\Http\Controllers\OrderController@view_myorder');
+Route::get('/my-order', 'App\Http\Controllers\OrderController@my_order');
+Route::get('/view-myorder/{order_code}', 'App\Http\Controllers\OrderController@view_myorder');
 
+//coupon(mã giảm giá)
+/* người dùng */
+Route::post('/check-coupon', 'App\Http\Controllers\CartController@check_coupon');
+
+/* admin */
+Route::get('/insert-coupon', 'App\Http\Controllers\CouponController@insert_coupon');
+Route::get('/list-coupon', 'App\Http\Controllers\CouponController@list_coupon');
+Route::get('/delete-coupon/{couponId}', 'App\Http\Controllers\CouponController@delete_coupon');
+
+Route::post('/insert-coupon-code', 'App\Http\Controllers\CouponController@insert_coupon_code');

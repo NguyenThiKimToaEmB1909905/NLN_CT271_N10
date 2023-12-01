@@ -1,252 +1,338 @@
 @extends('layout')
 @section('content')
-<section id="slider">
-{{--     <!--slider-->
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-12">
-                <div id="slider-carousel" class="carousel slide" data-ride="carousel">
-                    <ol class="carousel-indicators">
-                        <li data-target="#slider-carousel" data-slide-to="0" class="active"></li>
-                        <li data-target="#slider-carousel" data-slide-to="1"></li>
-                        <li data-target="#slider-carousel" data-slide-to="2"></li>
-                    </ol>
+    <br><br><br><br><br><br>
+    <style></style>
+    <section>
+        <div class="container-fluid p-0 mb-10 " style="height: 1000px;/* width: 1250px */">
 
-                    <div class="carousel-inner">
-                        <div class="item active">
-                            <div class="col-sm-6">
-                                <h1><span><img src="{{ URL::to('public/frontend/images/logo.jpg') }}"
-                                            style="width:80px; height:80px" alt="" />THEGIOISACH</span>.COM</h1>
-                                <h2>Tổng Hợp Những Bộ Sách Giáo Khoa Mới Nhất</h2>
-                                <p>Được nhận rất nhiều ưu đãi khi mua bộ sách lớp 1 mới nhất, kèm theo những quà tặng hấp dẫn dành cho bé...</p>
-                            </div>
-                            <div class="col-sm-6">
-                                <img src="{{ URL::to('public/frontend/images/td1.jpg') }}" class="girl img-responsive"
-                                    alt="" />
-                                <img src="images/home/pricing.png" class="pricing" alt="" />
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="col-sm-6">
-                                <h1><span><img src="{{ URL::to('public/frontend/images/logo.jpg') }}"
-                                            style="width:80px; height:80px" alt="" />THEGIOISACH</span>.COM</h1>
-                                <h2>Tổng Hợp Những Cuốn Sách Nổi Tiếng Của JIM ROHN</h2>
-                                <p>Được giảm 30% khi mua tại TheGioiSach...</p>
-                            </div>
-                            <div class="col-sm-6">
-                                <img src="{{ URL::to('public/frontend/images/td2.jpg') }}" class="girl img-responsive"
-                                    alt="" />
-                                <img src="images/home/pricing.png" class="pricing" alt="" />
-                            </div>
-                        </div>
-                        <div class="item ">
-                            <div class="col-sm-6">
-                                <h1><span><img src="{{ URL::to('public/frontend/images/logo.jpg') }}"
-                                            style="width:80px; height:80px" alt="" />THEGIOISACH</span>.COM</h1>
-                                <h2>Những Cuốn Tiểu Thuyết Hay</h2>
-                            <p>Săn SALE Ngay Để Tặng Được Nhiều Quà Tặng Hấp Dẫn...</p>
-                            </div>
-                            <div class="col-sm-6">
-                                <img src="{{ URL::to('public/frontend/images/td3.jpg') }}" class="girl img-responsive"
-                                    alt="" />
-                                <img src="images/home/pricing.png" class="pricing" alt="" />
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
-                        <i class="fa fa-angle-left"></i>
-                    </a>
-                    <a href="#slider-carousel" class="right control-carousel hidden-xs" data-slide="next">
-                        <i class="fa fa-angle-right"></i>
-                    </a>
-                </div>
-
-            </div>
-        </div>
-    </div> --}}
-</section>
-<section>
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-3">
-                <div class="left-sidebar">
-                    <h2>Danh Mục Sản Phẩm</h2>
-                    <!--category-productsr-->
-
-                    <div class="panel-group category-products" id="accordian">
-                        @foreach ($category_home as $key => $cate)
-                            <div class="panel panel-default">
-
-                                <div class="panel-heading">
-                                    <h3 class="panel-title"><a href="{{ URL::to('/home_danhmuc/'.$cate->category_id) }}">{{ $cate->category_name }}</a></h3>
-                                </div>
-                            </div>
-                             @endforeach
-                    </div>
-                   
-                    <!--/category-products-->
-
-                    <!--brands_products-->
-
-                    <div class="brands_products">
-
-                        <h2>Thương Hiệu Sản Phẩm</h2>
-
-                        <div class="brands-name">
-                            <ul class="nav nav-pills nav-stacked">
-                                @foreach ($brand_home as $key => $brand)
-                                    <li><a href="{{ URL::to('/home_thuonghieu/'.$brand->brand_id) }}"> <span class="pull-right"></span>{{ $brand->brand_name }}</a></li>
-                                @endforeach
+            <div class="bookBanner glass">
+                @foreach ($product_details as $key => $value)
+                    <div class="d-flex " style="height: 48vh">
+                        <div class="col-12 col-sm-5 " style="left: 150px;">
+                            {{-- <img src="{{ URL::to('public/uploads/product/' . $value->product_image) }}"
+                                style="border-radius: 15px 15px 15px 15px; width: 300px;" class="bookCover"
+                                alt="Cover not found" /> --}}
+                            <ul id="imageGallery">
+                                <li data-thumb="{{ URL::to('public/frontend/images/tienganh1.jpg') }} "
+                                    data-src="{{ URL::to('public/frontend/images/tienganh1.jpg') }}">
+                                    <img src="{{ URL::to('public/frontend/images/tienganh1.jpg') }}"
+                                        style="border-radius: 15px 15px 15px 15px;margin: 8%; 
+                                    width: 50%;
+                                    " />
+                                </li>
+                                <li data-thumb="{{ URL::to('public/frontend/images/tienganh2.jpg') }}"
+                                    data-src="{{ URL::to('public/frontend/images/tienganh2.jpg') }}">
+                                    <img src="{{ URL::to('public/frontend/images/tienganh2.jpg') }}"
+                                        style="border-radius: 15px 15px 15px 15px; width: 300px; margin: 8%; 
+                                    width: 50%;
+                                    " />
+                                </li>
                             </ul>
-                        </div>
 
-                    </div>
+                        </div>
+                        <div class="col-12 col-sm-9">
+                            <div class="singleBookInfo">
 
-                    
-                </div>
-            </div>
-            
-            <!-- Phần bên phải nd trang web -->
-            <div class="col-sm-9 padding-right">
-                @foreach ($product_details as $key => $detail)
-                <div class="product-details">
-        
-                    <!--product-details-->
-        
-        
-        
-                    <div class="col-sm-6">
-                        <div class="view-product">
-                            <img src="{{ URL::to('public/uploads/product/' . $detail->product_image) }}" alt="" />
-                            {{-- <h3>ZOOM</h3> --}}
-                        </div>
-                        
-        
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="product-information">
-                            <!--/product-information-->
-                            <img src="images/product-details/new.jpg" class="newarrival" alt="" />
-                            <h2>{{ $detail->product_name }}</h2>
-                            <p>Mã sản phẩm : {{ $detail->product_id }}</p>
-                            <img src="images/product-details/rating.png" alt="" />
-                            <form action="{{ URL::to('/save_cart/') }}" method="POST">
-                                {{ csrf_field() }}
-                            <span class="">
-                                <span>Giá: {{ number_format($detail->product_price) . ' ' . 'VNĐ' }}</span>
-                                <label>Số lượng:</label>
-                                <input name="qty" type="number" min="1" value="1" />
-                                <input name="productid_hidden" type="hidden" value="{{ $detail->product_id }}" />
-                                <button type="submit" class="btn btn-fefault cart">
-                                    <i class="fa fa-shopping-cart"></i>
-                                    Thêm vào giỏ hàng
-                                </button>
-                            </span>
-                            </form>
-                            <p><b>Tình Trạng:</b> Còn hàng</p>
-                            <p><b>Danh mục: </b>{{ $detail->category_name }}</p>
-                            <p><b>Thương hiệu: </b> {{ $detail->brand_name }}</p>
-                            <a href=""><img src="images/product-details/share.png" class="share img-responsive"
-                                    alt="" /></a>
-                        </div>
-                        <!--/product-information-->
-                    </div>
-        
-                </div>
-        
-                <!--/product-details-->
-        
-        
-                <div class="category-tab shop-details-tab">
-                    <!--category-tab-->
-                    <div class="col-sm-12">
-                        <ul class="nav nav-tabs">
-                            <li class="active"><a href="#details" data-toggle="tab">Thông tin Chi Tiết</a></li>
-                            <li><a href="#reviews" data-toggle="tab">Đánh giá</a></li>
-        
-        
-                        </ul>
-                    </div>
-                    <div class="tab-content">
-                        <div class="tab-pane fade active in" id="details">
-                            
-                            <p><b> {{ $detail->product_name }}</b></p>
-                            <p> {{ $detail->product_desc }}</p>
-                            <p> {{ $detail->product_content  }}</p>
-                            
-        
-        
-        
-                        </div>
-                        <div class="tab-pane fade " id="reviews">
-                            <div class="col-sm-12">
-                                <ul>
-                                    <li><a href=""><i class="fa fa-user"></i>EUGEN</a></li>
-                                    <li><a href=""><i class="fa fa-clock-o"></i>12:41 PM</a></li>
-                                    <li><a href=""><i class="fa fa-calendar-o"></i>31 DEC 2014</a></li>
-                                </ul>
-                                <p>Đánh giá sản phẩm .</p>
-                                <p><b>Write Your Review</b></p>
-        
-                                <form action="#">
-                                    <span>
-                                        <input type="text" placeholder="Họ và Tên" />
-                                        <input type="email" placeholder="Địa chỉ Email" />
-                                    </span>
-                                    <textarea name="" placeholder="Góp ý kiến"></textarea>
-                                    <b>Rating: </b> <img src="images/product-details/rating.png" alt="" />
-                                    <button type="button" class="btn btn-default pull-right">
-                                        Submit
-                                    </button>
-                                </form>
+                                <h1 class="text-muted">
+                                    <b>{{ $value->product_name }}</b>
+                                </h1>
+                                <h4 class="title-700 text-muted m-up-0">
+                                    <span>Tác giả: </b> {{ $value->brand_name }}</span>
+                                </h4>
+                                <br>
+                                <p>Mã sản phẩm :<b> {{ $value->product_id }}</b></p>
+                                <p>Số sách còn:<b> {{ $value->product_quantity }}</b></p>
+
+                                <a href=""><img src="images/product-details/share.png" class="share img-responsive"
+                                        alt="" /></a>
+
+                                <form action="{{ URL::to('/save-cart') }}" method="POST">
+                                    @csrf
+                                    <p class="m-up-10">
+                                        <span style="font-size: 25px" class="text-success">Giá:
+                                            {{ number_format($value->product_price) . ' ' . 'VNĐ' }}</span><br>
+                                        <del class="text-danger" style="font-size: 20px">Giá gốc: 150.000 VNĐ</del>
+
+                                    </p>
+                                    <input type="hidden" value="{{ $value->product_id }}"
+                                        class="cart_product_id_{{ $value->product_id }}">
+                                    <input type="hidden" value="{{ $value->product_name }}"
+                                        class="cart_product_name_{{ $value->product_id }}">
+                                    <input type="hidden" value="{{ $value->product_image }}"
+                                        class="cart_product_image_{{ $value->product_id }}">
+                                    <input type="hidden" value="{{ $value->product_quantity }}"
+                                        class="cart_product_quantity_{{ $value->product_id }}">
+                                    <input type="hidden" value="{{ $value->product_price }}"
+                                        class="cart_product_price_{{ $value->product_id }}">
+
+                                    <label>Số lượng:</label>
+                                    <input name="qty" type="number" min="1"
+                                        class="cart_product_qty_{{ $value->product_id }}" value="1" />
+                                    <input name="productid_hidden" type="hidden" value="{{ $value->product_id }}" />
+                                    <br><br><br>
+                                    <div class="m-up-2000 ratings">
+                                        <button type="button" class="btn rounded-btn btn-outline-success add-to-cart"
+                                            data-id_product="{{ $value->product_id }}" name="add-to-cart"><b>Thêm vào giỏ
+                                                hàng <i class="fa fa-shopping-cart"></i></b></button>
+                                        <button type="button"
+                                            class="btn rounded-btn btn-outline-danger add-to-cart"><b>Thêm vào yêu thích <i
+                                                    class="fa fa-heart"></i></b></button>
+
+                                    </div>
+
                             </div>
                         </div>
-        
                     </div>
-                </div>
-                <!--/category-tab-->
-            @endforeach
-            <div class="recommended_items">
-                <!--sản phẩm liên quan cùng chung 1 danh mục!-->
-                <h2 class="title text-center">Sản Phẩm Liên quan</h2>
-        
-                <div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
-                    <div class="carousel-inner">
-                        <div class="item active">
-                            @foreach ( $related as $key => $lienquan)
-                                
-                            <a href="{{ URL::to('Chi-tiet-sp/' . $lienquan->product_id) }}">
- 
-                            <div class="col-sm-4 ">
-                                <div class="product-image-wrapper">
-                                    <div class="single-products">
-                                        <div class="productinfo text-center" style="height: 400px">
-                                            <img src="{{ URL::to('public/uploads/product/' . $lienquan->product_image) }}" style="height: 250px" >
-                                            <h4>{{ $lienquan->product_name }}</h4>
-                                            <h4  style="color: rgb(239, 3, 3)">Giá: {{number_format($lienquan->product_price).' '.'VNĐ'}}</h4>
-                                            <p></p>
-                                            <button type="submit" class="btn btn-fefault cart">
-                                                <i class="fa fa-shopping-cart"></i>
-                                                Xem thêm
-                                            </button>                                 
-                                        </div>
-                                    </div>
-                                
+                    <br><br>
+                    <div class="d-flex">
+                        <div class="col-12 col-sm-4 "style="left: 70px;top: 70px">
+                            <div class="" style="padding: 25px 10px 5px 80px;">
+                                <h1 class="text-muted">Thông tin chi tiết</h1>
+                                <br>
+                                <p class=" text-justify">
+                                    {{ $value->product_desc }}
+                                </p>
+
+                                <div class="my-2 text-right">
+                                    <a class="btn btn-outline-primary m-1 btn-sm"></a>
                                 </div>
                             </div>
-                            @endforeach
-                            </a>
                         </div>
-                    
-                         
+                @endforeach
+
+                <div class="col-12 col-sm-7" style="left: 100px">
+                    <!-- <a class="btn  rounded-btn bg-fyellow text-dark px-4 mx-3">Buy
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <span th:text="${book.bookPrice}"></span> <i
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                class="fa-solid fa-indian-rupee-sign"></i>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </a> -->
+
+                    <div class="alsoLikeBlock mt-10 pt-3">
+                        <h1 class="text-muted">Sản phẩm liên quan</h1>
+                        @foreach ($related as $key => $lienquan)
+                            <a href="{{ URL::to('Chi-tiet-sp/' . $lienquan->product_id) }}">
+
+                                <div class="col-6 col-sm-4 col-md-4 col-mp mt-2">
+                                    <div class="browseBookCard">
+                                        <div class="discount text-center">
+                                            <p class="text-light off-text "> <b> <span></span><br /> <small
+                                                        class="text-small m-up-5">OFF</small></b></p>
+                                        </div>
+                                        <img class="pointer"
+                                            src="{{ URL::to('public/uploads/product/' . $lienquan->product_image) }}"
+                                            style="height: 200px">
+                                        <div class="mt-2 mb-1">
+                                            <b class="text-dark">{{ $lienquan->product_name }}</b>
+                                            <span class="to-right"><i class="fa fa-heart" aria-hidden="true"
+                                                    style="color: red"></i>{{-- <i class="fa-solid fa-star text-primary "></i> --}}&nbsp;
+                                                <span class="text-primary"></span>
+                                            </span>
+                                        </div>
+
+                                        <small th:attr="onclick=|clickOnBook('${book.bookId}')|"
+                                            class="text-small pointer m-up-10  text-muted"
+                                            th:text="${book.bookAuthor}"></small>
+
+                                        <small class="m-up-5 "><i class="fa fa-star text-dyellow"></i><i
+                                                class="fa fa-star text-dyellow"></i><i
+                                                class="fa fa-star text-dyellow"></i><i
+                                                class="fa fa-star text-dyellow"></i></small>
+
+                                        <div class="bookBuyFooter d-flex  m-up-10">
+                                            <p class="text-success text-size-20"><b th:text="${dprice}">Giá:
+                                                    {{ number_format($lienquan->product_price) . ' ' . 'VNĐ' }}</b>
+                                                <br> <small class="text-danger mx-2"><del>Giá gốc: 150.000 VND</del>
+                                                </small>
+                                            </p>
+                                            <i th:attr="onclick=|addToCart('${book.bookId}','${book.bookTitle}','${dprice}')|"
+                                                class=" pointer fa-solid fa-cart-plus to-right text-muted "></i>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                        @endforeach
+                        </a>
+
+
+
+
+
                     </div>
-                    
                 </div>
             </div>
+        </div>
+
+
+        </div>
+
+
+        <br><br>
+
+
+
+
+        {{-- Đánh giá san phẩm --}}
+        <div th:if="${!loginUser.equals('none') && loginUser.enabled}" class="alert alert-success container"
+            style="margin-top:80px;border-radius: 20px">
+            <div class="row">
+                <div class="col-sm-4 text-center">
+                    <img style="width: 150px; height: 140px" src="{{ URL::to('resources/image/webImg/starBook.png') }}"
+                        alt="" />
+                </div>
+                <div class="col-sm-8 pt-3">
+                    <div class="rating text-center">
+                        <h2>
+                            <b>Đánh Giá Sản Phẩm</b>
+                        </h2>
+                        <br>
+                        <div class="starrr"> <small class="m-up-5 "><i
+                                    class="fa fa-star text-dyellow"style="font-size: 20px"></i>
+
+                                <i class="fa fa-star text-dyellow" style="font-size: 20px"></i>
+                                <i class="fa fa-star text-dyellow"style="font-size: 20px"></i>
+                                <i class="fa fa-star text-dyellow"style="font-size: 20px"></i>
+                                <i class="fa fa-star text-dyellow"style="font-size: 20px"></i>
+                            </small></div>
+                    </div>
+                    <div class="reveiw hide text-center" tabindex="0" id="id">
+                        <p class="ratemsg text-muted"></p>
+                        <p class="reviewmsg text-muted"></p>
+                        <div class="bookReveiw">
+                            <textarea class="bookReveiwTxt form-control" placeholder="Enter the book review"></textarea>
+                            <div class="text-left text-danger"><small>please do not enter the personal information like
+                                    your email and phone number or your address for privacy.</small></div>
+                            <button class="btn btn-block btn-success">Submit review</button>
+                        </div>
+                    </div>
+                </div>
+
+
             </div>
         </div>
+
+        {{-- <div class="container" style="margin-top: 100px;margin-bottom: 50px">
+        <div class="divider"></div>
+        <h4 class="my-5 text-muted">Book user reviews</h4>
+        <div th:each="br : ${book.getBookRating()}" th:if="${br.review!=null}" class="row my-4">
+            <div class="col-sm-5 text-center">
+                <img style="width:170px;height:170px;border-radius: 50%" th:src="@{'/image/webContent/userImages/'+${br.rateuser.userPic}}" alt="" class="mt-2" />
+            </div>
+            <div class="col-sm-7">
+                <i class="fa-solid fa-quote-left text-primary"></i>
+                <p class="ml-3 text-dark text-justify" th:text="${br.review}"></p>
+                <small th:text="${br.date}"></small><br />
+                <div class="ratings" th:attr="data-rating=|${br.bookRate}|"></div>
+                <h4 class="text-capitalize"><b th:text="${br.rateuser.userName}"></b></h4>
+            </div>
+        </div>
+
+    </div> --}}
+
+
+        <script>
+            $(function() {
+                $(".starrr")
+                    .starrr()
+                    .on(
+                        "starrr:change",
+                        function(event, value) {
+                            var rate = value;
+                            var bookId = $(this).attr("data-id");
+                            $(".ratemsg")
+                                .html(
+                                    "<i class='text-success fa-solid fa-check'></i> &nbsp;Your responce saved...")
+                            $(".rating").addClass("hide");
+                            $(".reveiw").removeClass("hide");
+
+                            $.ajax({
+                                type: 'POST',
+                                url: '/user/saveRatings',
+                                data: JSON.stringify({
+                                    bid: bookId,
+                                    rate: rate
+                                }),
+                                dataType: 'json',
+                                contentType: 'application/json',
+                                cache: 'false',
+                                processData: 'false',
+                                success: function(response) {
+                                    window.scrollBy({
+                                        top: 700,
+                                        behavior: 'smooth',
+                                    });
+                                    console.log("save rating");
+                                },
+                            });
+
+                        });
+
+                var rating = document.getElementsByClassName("ratings");
+                for (var a = 0; a < rating.length; a++) {
+                    $(rating[a]).starrr({
+                        readOnly: true,
+                        rating: rating[a].getAttribute("data-rating")
+                    });
+                }
+
+            });
+
+            function clickOnBook(id) {
+                window.location.assign("/bookInfo/" + id);
+            }
+
+            function storeReview(id) {
+                var rev = $(".bookReveiwTxt").val();
+                $.ajax({
+                    type: 'POST',
+                    url: '/user/saveReview',
+                    data: JSON.stringify({
+                        bid: id,
+                        review: rev
+                    }),
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    cache: 'false',
+                    processData: 'false',
+                    success: function(response) {
+                        $(".ratemsg").addClass("hide");
+                        $(".bookReveiw").addClass("hide");
+                        $(".reviewmsg")
+                            .html(
+                                "<i class='fa-solid fa-3x text-primary fa-face-grin-stars'></i><br><i class='text-success fa-solid fa-check'></i> &nbsp;Your review saved...<br> Thanks for your responce."
+                            )
+                        console.log("save rating");
+                    },
+                });
+            }
+
+            function favoriteBook(bid) {
+                $.ajax({
+                    type: 'post',
+                    url: '/user/addTofavorite/' + bid, //This line
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response.status == "present")
+                            swal.fire("Information", "This book is alredy present in your favorite list", "info");
+                        else
+                            swal.fire("Success", "Book added to your favorite list successfully.", "success");
+
+                    },
+                    error: function(response) {
+
+                        swal.fire("something went wrong!!", "book not added to your favorite list try later..",
+                            "error");
+                    }
+                });
+            }
+        </script>
+    </section>
+
+
+
     </div>
-</section>
+
+    </div>
+
+    </div>
+    </div><!--/recommended_items-->
 @endsection
